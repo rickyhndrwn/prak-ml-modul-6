@@ -135,4 +135,4 @@ def init_db_values():
     return db_model_dict, random_test_image_dir, random_test_image_name
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
