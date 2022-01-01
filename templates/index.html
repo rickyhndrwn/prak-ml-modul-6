@@ -11,42 +11,6 @@
     <link rel="stylesheet" type="text/css" href="static/css/util.css">
     <link rel="stylesheet" type="text/css" href="static/css/main.css">
     <link rel="stylesheet" type="text/css" href="static/css/files.css">
-    <style>
-        #ïmag {
-            padding-left: 10px;
-            padding-right: 10px;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            float: center;
-            width: 19%;
-        }
-
-        #input {
-            font-family: Poppins-Medium;
-            font-size: 15px;
-            line-height: 1.5;
-            color: #666666;
-            visibility: visible;
-            display: block;
-            width: 100%;
-            background: #e6e6e6;
-            height: 50px;
-            border-radius: 25px;
-            padding: 0 30px 0 68px;
-        }
-
-        .checkboxes {
-            text-align:center;
-        }
-          
-        .checkboxes input{
-            margin: 0px 0px 0px 0px;
-        }
-          
-        .checkboxes label{
-            margin: 0px 20px 0px 3px;
-        }
-    </style>
     <!--===============================================================================================-->
 </head>
 
@@ -54,13 +18,17 @@
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100">
+                <!--title-->
                 <div class="wrap-title">
                     <span class="login100-form-mytitle">
                         Classification for Chest X-Ray Image
                     </span>
                 </div>
+                <!--title end-->
+
+                <!--query form-->
                 <form action="/" method="post" enctype="multipart/form-data">
-                    <!-- choose model -->
+                    <!--choose model-->
                     <div class="wrap-title" align="center">
                         <label class="form-label">
                             Pilih Skenario Model:
@@ -69,12 +37,12 @@
                             <option value="cxr_modul_2" selected>Modul 2</option>
                             <option value="cxr_modul_3">Modul 3</option>
                             <option value="cxr_modul_4">Modul 4</option>
-                            <!-- <option value="cxr_modul_5">Modul 5</option> -->
+                            <!--<option value="cxr_modul_5">Modul 5</option>-->
                         </select>
                     </div>
-                    <!-- choose model end -->
+                    <!--choose model end-->
 
-                    <!-- compare model -->
+                    <!--compare model-->
                     <div class="wrap-title" align="center">
                         <label class="form-label">
                             <br>
@@ -83,23 +51,23 @@
                         <br>
                         <div class="checkboxes">
                             <input type="hidden" id="cxr_modul_2" name="compare_model" value="cxr_modul_2"/>
-                            <input type="checkbox" id="cxr_modul_2" name="compare_model" value="cxr_modul_2" checked disabled ><label for="cxr_modul_2"> Modul 2</label>
+                            <input type="checkbox" id="cxr_modul_2" name="compare_model" value="cxr_modul_2" checked disabled><label for="cxr_modul_2"> Modul 2</label>
                             <input type="checkbox" id="cxr_modul_3" name="compare_model" value="cxr_modul_3"><label for="cxr_modul_3"> Modul 3</label>
                             <input type="checkbox" id="cxr_modul_4" name="compare_model" value="cxr_modul_4"><label for="cxr_modul_4"> Modul 4</label>
-                            <!-- <input type="checkbox" id="cxr_modul_5" name="compare_model" value="cxr_modul_5"><label for="cxr_modul_5"> Modul 5</label> -->
+                            <!--<input type="checkbox" id="cxr_modul_5" name="compare_model" value="cxr_modul_5"><label for="cxr_modul_5"> Modul 5</label>-->
                         </div>
                     </div>
-                    <!-- compare model end -->
+                    <!--compare model end-->
 
-                    <!-- upload query preview -->
+                    <!--upload query preview-->
                     <br><br>
                     <div align="center" data-tilt>
                         <img id="image-preview" alt="image preview" />
                         <br>
                     </div>
-                    <!-- upload query preview end -->
+                    <!--upload query preview end-->
 
-                    <!-- query by upload -->
+                    <!--query by upload-->
                     <div align="center">
                         <span class="login100-form-title">
                             Upload an Image File
@@ -120,18 +88,18 @@
                             </button>
                         </div>                    
                     </div>
-                    <!--query by upload end -->
+                    <!--query by upload end-->
                     
-                    <!-- sample query -->
+                    <!--query by sample-->
                     <h2 style="padding-left: 10px; padding-top: 10px">
                         <br>
                         Select Sample Query (Click on text)
                     </h2>
                     <table>
-                        {% for row_num in range(3) %}
+                        {% for row_num in range(4) %}
                         <tr>
-                            {% for col_num in range(3) %}
-                            {% with image_index=(col_num + (row_num * 3)) %}
+                            {% for col_num in range(4) %}
+                            {% with image_index=(col_num + (row_num * 4)) %}
                             <td>
                                 <div style="text-align: center;">
                                     {% with static_image_dir='static/db_test_image/' + test_images_names[image_index] %}
@@ -151,10 +119,11 @@
                         </tr>
                         {% endfor %}
                     </table>
-                    <!-- sample query end -->
+                    <!--query by sample end-->
                 </form>
+                <!--query form end-->
                 
-                <!-- choose model result -->
+                <!--choose model result-->
                 {% if model_count == 1 %}
                 <div class="wrap-title">
                     <br><br><br><br>
@@ -171,7 +140,7 @@
                 <div class="wrap-title">
                     <h3 style="padding-left: 10px;">{{ model_name }} Classification Result:</h3>
                     <h4 style="padding-left: 15px;">
-                        - Class: {{ pred_label }} {% if true_label != pred_label %} (Miss) {% endif %}
+                        - Class: {{ pred_label }}
                     </h4>
                     <h4 style="padding-left: 15px;">- Confidence: {{ pred_conf }}%</h4>
                     <h4 style="padding-left: 15px;">- Prediction Time: {{ pred_time }}s</h4>
@@ -204,17 +173,12 @@
                     {% endfor %}
                 </div>
                 {% endif %}
-                <!-- choose model result end -->
+                <!--choose model result end-->
             </div>
         </div>
     </div>
 
     <!--===============================================================================================-->
-    <script>
-        $('.js-tilt').tilt({
-            scale: 1.1
-        })
-    </script>
     <script src="static/js/files.js"></script>
     <!--===============================================================================================-->
     <script src="static/js/main.js"></script>

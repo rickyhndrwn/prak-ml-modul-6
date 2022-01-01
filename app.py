@@ -114,9 +114,17 @@ def pred_choosen_model(db_model_dict, choosen_model, uploaded_img_path):
     pred_time = round(time.time() - start, 4)
 
     output_layer_activation = str(model.layers[-1].activation).split(' ')[1]
-    pred_conf = '-' if output_layer_activation == 'sigmoid' else round(np.max(pred_result) * 100, 2) if output_layer_activation == 'softmax' else 9000
+    if output_layer_activation == 'sigmoid':
+        pred_conf = '-'
+        pred_value = (pred_result[0][0] > 0.5).astype(int)
+    
+    elif output_layer_activation == 'softmax':
+        pred_conf = round(np.max(pred_result) * 100, 2)
+        pred_value = np.argmax(pred_result)
+    
+    else:
+        pred_conf = 9000
 
-    pred_value = (pred_result[0][0] > 0.5).astype(int)
     pred_label = 'Normal' if pred_value == 0 else 'Pneumonia'
 
     return pred_label, pred_conf, pred_time
@@ -129,7 +137,8 @@ def init_db_values():
     db_model_dict = {
         'cxr_modul_2':db_model_dir + '/cxr_modul_2.h5',
         'cxr_modul_3':db_model_dir + '/cxr_modul_3.h5',
-        'cxr_modul_4':db_model_dir + '/cxr_modul_4.h5'
+        'cxr_modul_4':db_model_dir + '/cxr_modul_4.h5',
+        # 'cxr_modul_5':db_model_dir + '/cxr_modul_5.h5',
     }
 
     db_test_image_paths = list()
@@ -137,7 +146,7 @@ def init_db_values():
         db_test_image_paths.append(img_path)
     
     shuffle(db_test_image_paths)
-    random_test_image_dir = db_test_image_paths[:9]
+    random_test_image_dir = db_test_image_paths[:16]
     random_test_image_name = [img_dir.name for img_dir in random_test_image_dir]
 
     return db_model_dict, random_test_image_dir, random_test_image_name
