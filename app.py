@@ -76,6 +76,8 @@ def index():
                 model_pred_result = pred_choosen_model(db_model_dict, model, uploaded_img_path)
                 compared_model_result_dict[model] = model_pred_result
 
+            pred_time_list = [value[2] for value in compared_model_result_dict.values()]
+
             uploaded_img_path = '../' + uploaded_img_path
 
             return render_template(
@@ -88,6 +90,7 @@ def index():
                 query_image_name=query_img_name,
                 true_label=true_label,
                 compared_result=compared_model_result_dict,
+                pred_time_list=pred_time_list,
                 )
     
     else:
@@ -129,7 +132,7 @@ def pred_choosen_model(db_model_dict, choosen_model, uploaded_img_path):
 
     return pred_label, pred_conf, pred_time
 
-# fungsi init
+# fungsi init data
 def init_db_values():
     db_model_dir = './static/db_model'
     db_test_image_dir = './static/db_test_image'

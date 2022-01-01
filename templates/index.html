@@ -145,6 +145,9 @@
                     <h4 style="padding-left: 15px;">- Confidence: {{ pred_conf }}%</h4>
                     <h4 style="padding-left: 15px;">- Prediction Time: {{ pred_time }}s</h4>
                 </div>
+                <!--choose model result end-->
+
+                <!--compare model result-->
                 {% elif model_count > 1 %}
                 <div class="wrap-title">
                     <br><br><br><br>
@@ -168,12 +171,12 @@
                         - Class: {{ model_result[0] }} {% if true_label != model_result[0] %} (Miss) {% endif %}
                     </h4>
                     <h4 style="padding-left: 15px;">- Confidence: {{ model_result[1] }}%</h4>
-                    <h4 style="padding-left: 15px;">- Prediction Time: {{ model_result[2] }}s</h4>
+                    <h4 style="padding-left: 15px;">- Prediction Time: {{ model_result[2] }}s {% if model_result[2] == (pred_time_list|max) %}(FASTEST){% elif model_result[2] == (pred_time_list|min) %}(SLOWEST){% endif %}</h4>
                     <br>
                     {% endfor %}
                 </div>
                 {% endif %}
-                <!--choose model result end-->
+                <!--compare model result end-->
             </div>
         </div>
     </div>
